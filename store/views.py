@@ -6,7 +6,6 @@ from models import Category, Product
 
 from .pagination import DefaultPagination
 
-
 from django.db.models import Q
 
 
