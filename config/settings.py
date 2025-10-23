@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # Local apps
     'store',
     'rest_framwork',
+    'djoser',
 ]
 
 MIDDLEWARE = [
@@ -134,4 +135,11 @@ REST_FRAMEWORK = {
         'rest_framework.filters.SearchFilter',
         'rest_framework.filters.OrderingFilter',
     ],
+    'DEFAULT_AUTHENTICATION_CLASSES' : [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ]
+}
+
+SIMPLE_JWT = {
+    'AUTH_HEADER_TYPES' : ['JWY', ]
 }
