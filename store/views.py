@@ -58,3 +58,29 @@ class ProductApiView(ModelViewSet):
             queryset = queryset.order_by('-created_at')
         
         return queryset
+
+
+### Filtering by Django-filter
+import django_filters
+from django_filters.rest_framework import DjangoFilterBackend
+
+class ProductFiter(django_filters.FilterSet):
+    min_price = django_filters.NumberFilter(field_name='price', lookup_expr='gte')
+    max_price = django_filters.NumberFilter(field_name='price', lookup_expr='lte')
+    category_id = django_filters.NumberFilter(field_name='category')
+    name = django_filters.CharFilter(field_name='name', lookup_expr='icontains')
+    
+    class Meta:
+        model = Product
+        fields = ['category_id', 'min_price', 'max_price', 'name', 'is_active']
+
+
+class ProductApiView(ModelViewSet):
+    serializer_class = ProductSerializer
+    queryset = Product.objects.select_related('category').all()
+    pagination_class = DefaultPagination
+    filter_backends = [DjangoFilterBackend, 'rest_framework.filters.SearchFilter', 'rest_framework.filters.OrderingFilter']
+    filterset_class = ProductFiter
+    search_fields = ['name', 'description', 'category__name']
+    ordering_fields = ['price', 'created_at', 'updated_at', 'name']
+    ordering = ['-created_at']
