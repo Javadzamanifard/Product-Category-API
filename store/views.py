@@ -1,8 +1,9 @@
+from requests import Response
 from rest_framework.viewsets import ModelViewSet
 
-from serializers import CategorySerializer, ProductSerializer
+from .serializers import CategorySerializer, ProductSerializer
 
-from models import Category, Product
+from .models import Category, Product
 
 from .pagination import DefaultPagination
 

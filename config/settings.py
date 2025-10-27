@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -40,7 +41,8 @@ INSTALLED_APPS = [
     
     # Local apps
     'store',
-    'rest_framwork',
+    'rest_framework',
+    'rest_framework_simplejwt',
     'djoser',
 ]
 
@@ -128,8 +130,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framwork.pagination.PageNumberPageination',
-    'PAGE_SIZE': 10,
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPageination',
+    # 'PAGE_SIZE': 10,
     'DEFAULT_FILTER_BACKENDS':[
         'django_filters.rest_framework.DjangoFilterBackend',
         'rest_framework.filters.SearchFilter',
@@ -141,5 +143,16 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    'AUTH_HEADER_TYPES' : ['JWY', ]
+    'AUTH_HEADER_TYPES' : ['JWT', ],
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1), 
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=15),
+}
+
+
+DJOSER = {
+        'TOKEN_MODEL': None,
+        'SERIALIZERS' :{
+        'user_create' : 'config.serializers.UserCreateSerializer',
+        'current_user': 'config.serializers.UserSerializer',
+    }
 }
