@@ -1,13 +1,17 @@
 from requests import Response
 from rest_framework.viewsets import ModelViewSet
 
-from .serializers import CategorySerializer, ProductSerializer
+from .serializers import CategorySerializer, CustomUserSerializer, ProductSerializer
 
-from .models import Category, Product
+from .models import Category, CustomUser, Product
 
 from .pagination import DefaultPagination
 
 from django.db.models import Q
+
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework import status
 
 
 class CategoryApiView(ModelViewSet):
@@ -85,3 +89,16 @@ class ProductApiView(ModelViewSet):
     search_fields = ['name', 'description', 'category__name']
     ordering_fields = ['price', 'created_at', 'updated_at', 'name']
     ordering = ['-created_at']
+
+
+class CustomUserViewset(ModelViewSet):
+    queryset = CustomUser.objects.all()
+    serializer_class = CustomUserSerializer
+    
+    @action(detail=False, methods=['get'])
+    def me(self, request):
+        if not request.user.is_authenticated:
+            return Response({"detail": "Not authenticated"}, status=status.HTTP_401_UNAUTHORIZED)
+        customer, created = CustomUser.objects.get_or_create(user=request.user)
+        serializer = CustomUserSerializer(customer)
+        return Response(serializer.data)

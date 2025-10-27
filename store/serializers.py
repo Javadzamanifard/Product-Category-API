@@ -1,8 +1,22 @@
 from rest_framework import serializers
 
-from .models import Category, Product
+from .models import Category, CustomUser, Product
 
 from django.utils.text import slugify
+
+
+class Userserializer(serializers.ModelSerializer):
+    class Meta:
+        model = 'auth.User'
+        fields = ['id', 'user', 'phone']
+
+
+
+class CustomUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['id', 'user', 'phone']
+
 
 
 class CategorySerializer(serializers.ModelSerializer):

@@ -2,6 +2,15 @@ from django.db import models
 from django.utils.text import slugify
 
 
+class CustomUser(models.Model):
+    user = models.OneToOneField('auth.User', on_delete=models.CASCADE)
+    phone = models.CharField(max_length=15, blank=True)
+    
+    
+    def __str__(self):
+        return self.user.username
+
+
 class Category(models.Model):
     name        = models.CharField(max_length=155, unique=True)
     slug        = models.SlugField(max_length=155, unique=True)
