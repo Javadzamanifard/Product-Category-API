@@ -13,16 +13,19 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status
 
+from permissions import IsAdminOrReadOnly
 
 class CategoryApiView(ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     pagination_class = DefaultPagination
+    parser_classes = [IsAdminOrReadOnly]
 
 
 class ProductApiView(ModelViewSet):
     serializer_class = ProductSerializer
     pagination_class = DefaultPagination
+    permission_classes  = [IsAdminOrReadOnly]
     
     def get_queryset(self):
         request = self.request

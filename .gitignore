@@ -1,3 +1,5 @@
 venv/
 *.pyc
 Help.text
+*.sqlite3
+__pycache__/
