@@ -145,6 +145,6 @@ media/
 *.pyc
 👨‍💻 توسعه‌دهنده
 نام: Javad Zamani
-📧 ایمیل (اختیاری):javadzamanii.1374@gmail.com
+📧 ایمیل :javadzamanii.1374@gmail.com
 🌍 ساخته‌شده با Django REST Framework ❤️
 
