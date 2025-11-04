@@ -3,3 +3,4 @@ venv/
 Help.text
 *.sqlite3
 __pycache__/
+.env
